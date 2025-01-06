@@ -74,3 +74,37 @@ h1 {
     transition: transform 0.3s; /* Animáció a hover-re */
 }
 
+.custom-alert {
+    background-color: #6ccccc; /* Egyedi háttérszín */
+    color: #ffffff; /* Fehér szöveg */
+    padding: 15px; /* Hasonló margók, mint az alert osztályban */
+    border-radius: 5px; /* Kerekített sarkok */
+    font-weight: bold; /* Félkövér szöveg */
+}
+
+.custom-btn {
+    background-color: #6ccccc; /* Egyedi háttérszín */
+    color: #ffffff; /* Fehér szöveg */
+    border: none; /* Eltüntetjük az alapértelmezett szegélyt */
+    padding: 10px 20px; /* Térköz a gomb körül */
+    border-radius: 5px; /* Lekerekített sarkok */
+    font-weight: bold; /* Félkövér szöveg */
+    cursor: pointer; /* Kézkurzor hatás */
+    transition: background-color 0.3s ease; /* Színátmenet hover esetén */
+}
+
+.custom-btn:hover {
+    background-color: #5ab5b5; /* Sötétebb árnyalat hoverkor */
+}
+
+#arSlider {
+    width: 100%;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.d-flex.justify-content-between span {
+    font-size: 14px;
+}
