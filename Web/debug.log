@@ -1,0 +1,23 @@
+Array
+(
+    [termek_id] => 6
+    [action] => add
+)
+
+SESSION: Array
+(
+    [user_id] => 3
+    [username] => felhasznalo02
+    [kosar] => Array
+        (
+            [1] => Array
+                (
+                    [tnev] => Apple iPhone 11
+                    [ar] => 150000
+                    [kep] => elekt1.jpg
+                    [mennyiseg] => 1
+                )
+
+        )
+
+)
