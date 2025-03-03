@@ -7,7 +7,7 @@
     <title>Regisztráció</title>
 </head>
 <body>
-    <img src="./images/logo.png" alt="Webshop Logó" class="logo">
+    <img src="./kepek/logo.png" alt="Webshop Logó" class="logo">
 
     <div class="container">
         <h1>Regisztráció</h1>
