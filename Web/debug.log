@@ -4,4 +4,8 @@ Array
     [action] => add
 )
 
-SESSION: 
+SESSION: Array
+(
+    [user_id] => 3
+    [username] => felhasznalo02
+)

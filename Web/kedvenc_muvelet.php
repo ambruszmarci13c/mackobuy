@@ -1,14 +1,17 @@
 <?php
+session_start(); // EZ LEGYEN AZ ELSŐ SORBAN!
+include 'sql_fuggvenyek.php';
+
+
 file_put_contents("debug.log", print_r($_POST, true));
 file_put_contents("debug.log", "\nSESSION: " . print_r($_SESSION, true), FILE_APPEND);
 
-session_start();
-include 'sql_fuggvenyek.php';
-
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) { 
     echo json_encode(["status" => "error", "message" => "Be kell jelentkezni!"]);
     exit;
 }
+$user_id = $_SESSION['user_id']; // Helyesen "user_id"
+
 
 $conn = new mysqli("localhost", "root", "", "mackobuy");
 if ($conn->connect_error) {

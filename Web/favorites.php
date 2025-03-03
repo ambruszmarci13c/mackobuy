@@ -2,6 +2,7 @@
 session_start();
 include 'sql_fuggvenyek.php';
 
+
 if (!isset($_SESSION['user_id'])) {
     die("Hiba: Nem vagy bejelentkezve.");
 }
@@ -17,7 +18,7 @@ if ($conn->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['termek_id'])) {
     $termek_id = $_POST['termek_id'];
 
-    $query = "DELETE FROM kedvencek WHERE felhasznalo_id = ? AND termek_id = ?";
+    $query = "DELETE FROM kedvencek WHERE user_id = ? AND termek_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ii", $user_id, $termek_id);
 
@@ -35,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['termek_id'])) {
 $query = "SELECT t.ID, t.tnev, t.ar, t.kep 
           FROM termekek t
           JOIN kedvencek k ON t.ID = k.termek_id
-          WHERE k.felhasznalo_id = ?";
+          WHERE k.user_id = ?";
 
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $user_id);

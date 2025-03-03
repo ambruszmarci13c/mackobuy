@@ -2,6 +2,9 @@
 session_start();
 include 'sql_fuggvenyek.php'; // Adatbázis kapcsolódás és lekérdezés funkciók
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Valuta beállítása, ha a felhasználó választott
 if (isset($_POST['penznem'])) {
     $penznem = $_POST['penznem'];
@@ -229,7 +232,7 @@ if (!isset($szurt_termekek)) {
                                     <button type="button" class="btn custom-btn" data-bs-toggle="modal" data-bs-target="#termekModal<?= $termek['ID'] ?>">
                                         Részletek
                                     </button>
-                                    <button class="kedvenc-gomb" data-termek-id="1">
+                                    <button class="kedvenc-gomb" data-termek-id="<?= $termek['ID'] ?>">
                                         🤍 Hozzáadás
                                     </button>
                                 </div>
