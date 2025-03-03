@@ -1,5 +1,6 @@
 Array
 (
+<<<<<<< HEAD
     [termek_id] => 6
     [action] => add
 )
@@ -21,3 +22,10 @@ SESSION: Array
         )
 
 )
+=======
+    [termek_id] => 1
+    [action] => add
+)
+
+SESSION: 
+>>>>>>> e30bef2526fbf0f839950cf48af724e765e07a03

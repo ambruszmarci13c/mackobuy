@@ -2,9 +2,12 @@
 session_start();
 include 'sql_fuggvenyek.php'; // Adatbázis kapcsolódás és lekérdezés funkciók
 
+<<<<<<< HEAD
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+=======
+>>>>>>> e30bef2526fbf0f839950cf48af724e765e07a03
 // Valuta beállítása, ha a felhasználó választott
 if (isset($_POST['penznem'])) {
     $penznem = $_POST['penznem'];
@@ -87,6 +90,7 @@ if (!isset($szurt_termekek)) {
     $szurt_termekek = [];
 }
 
+<<<<<<< HEAD
 $conn = new mysqli("localhost", "root", "", "mackobuy");
 if ($conn->connect_error) {
     die("Adatbázis hiba: " . $conn->connect_error);
@@ -108,6 +112,8 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
+=======
+>>>>>>> e30bef2526fbf0f839950cf48af724e765e07a03
 ?>
 
 <!DOCTYPE html>
@@ -165,6 +171,7 @@ $stmt->close();
                 </div>
             </div>
         </nav>
+<<<<<<< HEAD
 
     <!-- Tartalom -->
     <div class="container my-5">
@@ -302,6 +309,146 @@ $stmt->close();
                 Ebben az ártartományban egy termék sem található!
             </div>
         <?php endif; ?>
+=======
+
+    <!-- Tartalom -->
+    <div class="container my-5">
+        <br><br>
+        <div class="text-center">
+    <img src="./kepek/logo.png" alt="mackobuy logo" class="img-fluid" style="max-width: 300px;">
+</div>        
+        <div class="container mt-4">
+            <!-- Szűrési feltételek blokk -->
+            <div class="card p-3 shadow-sm">
+                <h4 class="card-title mb-4 text-center">Szűrési feltételek</h4>
+                <form method="POST" id="szuresForm">
+                    <div class="row align-items-center">
+                        <!-- Kategóriaválasztó -->
+                        <div class="col-md-6">
+                            <label for="kategoria" class="form-label"><strong>Kategória kiválasztása:</strong></label>
+                            <select name="kategoria" id="kategoria" class="form-select form-control-lg">
+                                <option value="">Összes termék</option>
+                                <?php foreach ($kategoriak as $kategoria): ?>
+                                    <option value="<?= htmlspecialchars($kategoria['nev']) ?>" 
+                                        <?= $kategoria_szures === $kategoria['nev'] ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($kategoria['nev']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+
+                        <?php
+                        $valuta_jel = ($aktualis_penznem === 'EUR') ? '€' : 'Ft';
+                        $formazott_min_ar = number_format($min_ar * $arfolyam, 0, ',', ' ') . ' ' . $valuta_jel;
+                        $formazott_max_ar = number_format($max_ar * $arfolyam, 0, ',', ' ') . ' ' . $valuta_jel;
+                        ?>
+
+                        <input type="hidden" id="aktualisPenznem" value="<?= $valuta_jel ?>">
+
+
+
+                        <!-- Ár szűrési csúszka -->
+                    <div class="col-md-6">
+                        <label for="arSlider" class="form-label"><strong>Ár szűrés:</strong></label>
+                        <div id="arSlider" class="custom-slider"></div>
+
+                        <?php
+                        // Új változók a formázott árakhoz
+                        $valuta_jel = ($aktualis_penznem === 'EUR') ? '€' : 'Ft';
+                        $formazott_min_ar = number_format($min_ar, 0, ',', ' ') . ' ' . $valuta_jel;
+                        $formazott_max_ar = number_format($max_ar, 0, ',', ' ') . ' ' . $valuta_jel;
+                        ?>
+
+                        <div class="d-flex justify-content-between mt-2">
+                            <span id="minArKijelzo"><?= $formazott_min_ar ?></span>
+                            <span id="maxArKijelzo"><?= $formazott_max_ar ?></span>
+                        </div>
+
+                        <input type="hidden" name="min_ar" id="minAr" value="<?= $min_ar ?>">
+                        <input type="hidden" name="max_ar" id="maxAr" value="<?= $max_ar ?>">
+                    </div>
+
+                    <!-- Szűrés gomb -->
+                    <div class="text-center mt-4">
+                        <button type="button" id="szuresGomb" class="btn custom-btn">Szűrés</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Szűrt termékek -->
+        <div id="termekekListaja">
+            <h2 class="my-4"><?= $kategoria_szures ? 'Kiválasztott kategória: ' . htmlspecialchars($kategoria_szures) : 'Termékek:' ?></h2>
+            <div class="row">
+                <?php if (is_array($szurt_termekek) && !empty($szurt_termekek)): ?>
+                    <?php foreach ($szurt_termekek as $termek): ?>
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <img src="kepek/<?= htmlspecialchars($termek['kep']) ?>" class="card-img-top" alt="<?= htmlspecialchars($termek['tnev']) ?>">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?= htmlspecialchars($termek['tnev']) ?></h5>
+                                    <?php
+                                        $atvaltott_ar = round($termek['ar'] * $arfolyam, 2);
+                                        $valuta_jel = $aktualis_penznem === 'EUR' ? '€' : 'Ft';
+                                    ?>
+                                    <p class="card-text"><strong>Ár:</strong> <?= $atvaltott_ar . ' ' . $valuta_jel ?></p>
+
+                                    <!-- Részletek gomb -->
+                                    <button type="button" class="btn custom-btn" data-bs-toggle="modal" data-bs-target="#termekModal<?= $termek['ID'] ?>">
+                                        Részletek
+                                    </button>
+                                    <button class="kedvenc-gomb" data-termek-id="1">
+                                        🤍 Hozzáadás
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+<div class="modal fade" id="termekModal<?= $termek['ID'] ?>" tabindex="-1" aria-labelledby="termekModalLabel<?= $termek['ID'] ?>" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="termekModalLabel<?= $termek['ID'] ?>"><?= htmlspecialchars($termek['tnev']) ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Bezárás"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <img src="kepek/<?= htmlspecialchars($termek['kep']) ?>" class="img-fluid mb-3" alt="<?= htmlspecialchars($termek['tnev']) ?>">
+                    <p><?= nl2br(htmlspecialchars($termek['leiras'])) ?></p>
+                    
+                    <?php if ($termek['garancia']): ?>
+                        <p>Garancia: <?= htmlspecialchars($termek['garancia']) ?> hónap</p>
+                    <?php endif; ?>
+                    
+                    <?php
+                        $atvaltott_ar = round($termek['ar'] * $arfolyam, 2);
+                        $valuta_jel = $aktualis_penznem === 'EUR' ? '€' : 'Ft';
+                    ?>
+                    <p><strong>Ár:</strong> <?= $atvaltott_ar . ' ' . $valuta_jel ?></p>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <form method="POST" action="kosar.php">
+                    <input type="hidden" name="termek_id" value="<?= $termek['ID'] ?>">
+                    <button type="submit" class="btn custom-btn">Kosárba</button>
+                </form>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="custom-alert text-center" role="alert">
+                        Ebben az ártartományban egy termék sem található!
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+>>>>>>> e30bef2526fbf0f839950cf48af724e765e07a03
     </div>
 </div>
 
@@ -403,10 +550,17 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (data.status === "success") {
                     if (action === "add") {
                         button.classList.add("kedvenc");  // CSS osztály a kijelöléshez
+<<<<<<< HEAD
                         button.innerHTML = "❤️";  // Szív ikon beállítása
                     } else {
                         button.classList.remove("kedvenc");
                         button.innerHTML = "🤍";  // Visszaállítás
+=======
+                        button.innerHTML = "❤️ Kedvenc";  // Szív ikon beállítása
+                    } else {
+                        button.classList.remove("kedvenc");
+                        button.innerHTML = "🤍 Hozzáadás";  // Visszaállítás
+>>>>>>> e30bef2526fbf0f839950cf48af724e765e07a03
                     }
                 } else {
                     alert("Hiba: " + data.message);
