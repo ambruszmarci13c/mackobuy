@@ -1,54 +1,57 @@
 <?php
-function adatokLekeres($muvelet) {
-    //Kapcsolat létrehozás:
-    $db = new mysqli ('localhost', 'root', '', 'mackobuy');
-    //Kapcsolat létrejöttének vizsgálata:
-    if ($db->connect_errno == 0) {
-        //Az SQL művelet végrehajtása:
-        $eredmeny = $db->query($muvelet);
-        //Történt-e hiba a végrehajtáskor:
-        if ($db->errno == 0) {
-            //Kaptunk-e vissza adatokat:
-            if ($eredmeny->num_rows != 0) {
-                //Az adatok lehívása az adatbázis kiszolgálóról:
-                $adatok = $eredmeny->fetch_all(MYSQLI_ASSOC);
-                return $adatok;
-            }
-            else {
-                return 'Nincsenek találatok!';
-            }
-        }
-        else {
-            return $db->error;
-        }
+function dbKapcsolat() {
+    $db = new mysqli('localhost', 'root', '', 'mackobuy');
+    if ($db->connect_errno) {
+        die("Adatbázis kapcsolódási hiba: " . $db->connect_error);
     }
-    else {
-        return $db->connect_error;
-    }
+    $db->set_charset("utf8");
+    return $db;
 }
 
-function adatokValtoztatasa($muvelet){
-    $db = new mysqli ('localhost', 'root', '', 'mackobuy');
-    if($db->connect_errno==0){
-        $db->query($muvelet);
-        if($db-> errno==0){
-            if($db->affected_rows>0){
-                return 'Sikeres művelet!';
-            }
-            else if($db->affected_rows==0){
-                return 'Sikertelen művelet!';
-            }
-            else{
-                return $db->error;
-            }
-        }
-        else{
-            return $db->error;
-        }
+// Adatok lekérdezése paraméterekkel
+function adatokLekeres($muvelet, $parameterek = []) {
+    $db = dbKapcsolat();
+    $stmt = $db->prepare($muvelet);
+    
+    if (!$stmt) {
+        die("SQL hiba: " . $db->error);
     }
-    else{
-        return $db->connect_error;
+    
+    if (!empty($parameterek)) {
+        $tipusok = str_repeat('s', count($parameterek)); // Minden paraméter stringként kerül kezelve
+        $stmt->bind_param($tipusok, ...$parameterek);
     }
+    
+    $stmt->execute();
+    $eredmeny = $stmt->get_result();
+    $adatok = $eredmeny->fetch_all(MYSQLI_ASSOC);
+    
+    $stmt->close();
+    $db->close();
+    
+    return $adatok;
 }
 
+// Adatok beszúrása / módosítása / törlése paraméterekkel
+function adatokValtoztatasa($muvelet, $parameterek = []) {
+    $db = dbKapcsolat();
+    $stmt = $db->prepare($muvelet);
+    
+    if (!$stmt) {
+        die("SQL hiba: " . $db->error);
+    }
+    
+    if (!empty($parameterek)) {
+        $tipusok = str_repeat('s', count($parameterek)); // Minden paraméter stringként kerül kezelve
+        $stmt->bind_param($tipusok, ...$parameterek);
+    }
+    
+    $stmt->execute();
+    $siker = $stmt->affected_rows > 0;
+    
+    $stmt->close();
+    $db->close();
+    
+    return $siker ? "Sikeres művelet!" : "Sikertelen művelet!";
+}
 ?>

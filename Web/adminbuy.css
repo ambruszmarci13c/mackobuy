@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-grow: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    background-color: #6ccccc;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+nav {
+    background-color: #5cbdbd;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px; /* Ikon mérete */
+    display: inline-flex;
+    align-items: center;
+}
+
+nav a i {
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav a:hover i {
+    color: #f1f1f1;
+    transform: scale(1.1); /* Kicsi nagyítás hover-re */
+}
+
+
+h1, h2 {
+    color: #6ccccc;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.table th {
+    background-color: #6ccccc;
+    color: white;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.btn-success, .btn-warning, .btn-danger {
+    margin-right: 5px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #6ccccc;
+    color: white;
+    margin-top: 20px;
+}
