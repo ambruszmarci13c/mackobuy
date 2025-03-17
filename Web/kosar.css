@@ -5,6 +5,9 @@ body, html {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     padding: 0;
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -198,7 +201,7 @@ body.dark-mode {
 }
 
 .dark-mode th {
-    background-color: #333;  
+    background-color: #444343;  
     color: white;
 }
 
@@ -207,24 +210,42 @@ body.dark-mode {
     color: white;
 }
 
-.dark-mode .text-muted {
-    color: white !important;
-}
-
-
-.dark-mode tbody tr:hover {
-    background-color: #444; /* Sötétebb hover effekt */
-}
-
 .dark-mode .table-bordered {
     border-color: #555; /* Halványabb szegély */
 }
 
-.dark-mode .table-hover tbody tr:hover {
-    background-color: #444; /* Ha van hover effekt */
+body.dark-mode .modal-body {
+    background-color: #6d6b6bda;
+    color: white;
+    border: 1px solid #333;
 }
 
-.dark-mode body {
-    background-color: #424040 !important;
+/* Fehér szöveg a form-label-re dark mode-ban */
+body.dark-mode .modal-body .form-label {
+    color: white !important;
 }
+
+body.dark-mode .modal-header {
+    background-color: #6d6b6bda;
+    border-bottom: 1px solid #444;
+}
+
+body.dark-mode .modal-footer {
+    background-color: #6d6b6bda;
+    border-top: 1px solid #444;
+}
+
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select {
+    background-color: #333333;
+    color: white;
+    border: 1px solid #555;
+}
+
+
+
+
+
+
 

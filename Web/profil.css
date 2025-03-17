@@ -187,3 +187,30 @@ body.dark-mode .modal-footer {
     background-color: #6d6b6bda;
     border-top: 1px solid #444;
 }
+
+body.dark-mode .orders-table {
+    background-color: #222; 
+    color: white; 
+}
+
+body.dark-mode .orders-table th {
+    background-color: #444343;  
+    color: white;
+}
+
+body.dark-mode .orders-table td {
+    background-color: #2a2a2a; 
+    color: white;
+}
+
+body.dark-mode .orders-table tbody tr:hover {
+    background-color: #444; /* Sötétebb hover effekt */
+}
+
+body.dark-mode .table-bordered {
+    border-color: #555; /* Halványabb szegély */
+}
+
+body.dark-mode .table-hover tbody tr:hover {
+    background-color: #444; /* Ha van hover effekt */
+}

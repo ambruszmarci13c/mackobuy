@@ -187,7 +187,7 @@ $orders_result = $orders_stmt->get_result();
                     </li>
                     <?php endif; ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="logout.php">
+                        <a class="nav-link" href="mackobuy_bejelentkezes.php">
                             <img src="kepek/logout.png" alt="Kijelentkezés" style="height: 40px;" title="Kijelentkezés">
                         </a>
                     </li>
