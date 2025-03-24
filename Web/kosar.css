@@ -1,0 +1,251 @@
+body, html {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    padding: 0;
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+}
+
+
+.custom-navbar {
+    background-color: lightgrey; 
+    opacity: 80%;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #6ccccc;
+    color: white;
+    margin-top: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+
+.container {
+    flex: 1; 
+}
+
+.penznem-select {
+    background-color: #6ccccc; /* Alapszín */
+    color: white; /* Szöveg színe */
+    border: 2px solid #5bbbbb; /* Keret */
+    border-radius: 8px; /* Lekerekítés */
+    padding: 6px 12px; /* Belső margó */
+    font-weight: bold;
+    margin-top: 8px; 
+    margin-left: 10px;
+    appearance: none; /* Alapértelmezett nyíl eltávolítása */
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); 
+    background-repeat: no-repeat;
+    background-position: right 10px center; 
+    background-size: 12px; 
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s; /* Animáció */
+}
+
+.penznem-select:hover {
+    background-color: #5bbbbb; 
+    border-color: #4aa9a9; 
+}
+
+.penznem-select:focus {
+    outline: none; 
+    box-shadow: 0 0 8px rgba(108, 204, 204, 0.8); 
+}
+
+.custom-btn {
+    background-color: #6ccccc;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.custom-btn:hover {
+    background-color: #4ea7a7;
+    transform: scale(1.05);
+}
+
+.custom-btn:active {
+    transform: scale(1);
+}
+
+#rendelesLeadas {
+    font-size: 1.2rem;  
+    padding: 15px 25px; 
+}
+
+.extra-koltseg {
+    font-size: 16px;  
+    color: #6c757d; 
+}
+
+.table-container {
+    overflow-x: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 15px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table th {
+    background: #f8f9fa;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    padding: 12px;
+    border-bottom: 2px solid #ddd;
+}
+
+.table tbody tr {
+    transition: all 0.3s ease-in-out;
+}
+
+.table tbody tr:hover {
+    background: #f1f1f1;
+    transform: scale(1.01);
+}
+
+.table td {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+.table img {
+    border-radius: 5px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.table img:hover {
+    transform: scale(1.2);
+}
+
+.btn-outline-danger, .btn-outline-success {
+    width: 25px;
+    height: 25px;
+    padding: 3px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+    border: none;
+    transition: background 0.3s ease-in-out;
+}
+
+.btn-danger:hover {
+    background: #b52b3b;
+}
+
+@media (max-width: 768px) {
+    .table th, .table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .btn-outline-danger, .btn-outline-success {
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+    }
+}
+.ketmunkanap {
+    width: auto !important;
+    height: 10px !important;
+    display: inline-block; /* Biztosítja, hogy a méretezés működjön */
+}
+
+#profilDropdown::after {
+    display: none !important;
+}
+
+#darkModeToggle {
+    margin-left: 10px; 
+}
+
+body.dark-mode {
+    background-color: #424040 !important; 
+    color: #ffffff !important;
+}
+
+.dark-mode table {
+    background-color: #222; 
+    color: white; 
+}
+
+.dark-mode th {
+    background-color: #444343;  
+    color: white;
+}
+
+.dark-mode td {
+    background-color: #2a2a2a; 
+    color: white;
+}
+
+.dark-mode .table-bordered {
+    border-color: #555; /* Halványabb szegély */
+}
+
+body.dark-mode .modal-body {
+    background-color: #6d6b6bda;
+    color: white;
+    border: 1px solid #333;
+}
+
+/* Fehér szöveg a form-label-re dark mode-ban */
+body.dark-mode .modal-body .form-label {
+    color: white !important;
+}
+
+body.dark-mode .modal-header {
+    background-color: #6d6b6bda;
+    border-bottom: 1px solid #444;
+}
+
+body.dark-mode .modal-footer {
+    background-color: #6d6b6bda;
+    border-top: 1px solid #444;
+}
+
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select {
+    background-color: #333333;
+    color: white;
+    border: 1px solid #555;
+}
+
+
+
+
+
+
+
