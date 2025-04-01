@@ -1,24 +1,16 @@
 Array
 (
-    [termek_id] => 54
+    [termek_id] => 61
     [action] => add
 )
 
 SESSION: Array
 (
-    [user_id] => 2
-    [username] => admin01
+    [user_id] => 1
+    [username] => Adam
     [penznem] => HUF
     [kosar] => Array
         (
-            [1] => Array
-                (
-                    [tnev] => Apple iPhone 11
-                    [ar] => 150000
-                    [kep] => elekt1.jpg
-                    [mennyiseg] => 1
-                )
-
         )
 
 )

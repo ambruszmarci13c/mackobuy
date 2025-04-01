@@ -30,15 +30,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $result = $stmt->get_result();
             $user_password_data = $result->fetch_assoc();
 
-            if ($user_password_data && password_verify($current_password, $user_password_data['jelszo'])) {
-                $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
+
+            if ($user_password_data && $current_password === $user_password_data['jelszo']) {
+
                 $update_query = "UPDATE felhasznalok SET jelszo = ? WHERE id = ?";
                 $update_stmt = $conn->prepare($update_query);
-                $update_stmt->bind_param("si", $hashed_new_password, $user_id);
-                if ($update_stmt->execute()) {
-                    $message = "Jelszó sikeresen módosítva!";
+
+                if (!$update_stmt) {
+                     error_log("Prepare failed (UPDATE jelszo): (" . $conn->errno . ") " . $conn->error);
+                     $message = "Adatbázis hiba (frissítés előkészítése sikertelen).";
                 } else {
-                    $message = "Hiba történt a jelszó módosítása során.";
+                    // Az új, sima szöveges jelszót kötjük be (s = string)
+                    $update_stmt->bind_param("si", $new_password, $user_id);
+
+                    if ($update_stmt->execute()) {
+                        $message = "Jelszó sikeresen módosítva!";
+                    } else {
+                        error_log("Execute failed (UPDATE jelszo): (" . $update_stmt->errno . ") " . $update_stmt->error);
+                        $message = "Hiba történt a jelszó módosítása során.";
+                    }
+                    $update_stmt->close(); // Mindig zárjuk be a statement-et
                 }
             } else {
                 $message = "A jelenlegi jelszó hibás!";
@@ -178,7 +189,7 @@ $orders_result = $orders_stmt->get_result();
                 <li><a class="dropdown-item" href="mackobuy_bejelentkezes.php">Bejelentkezés</a></li>
             <?php endif; ?>
         </ul>
-    </li>
+            </li>
                     <?php if ($is_admin): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="adminbuy.php">
@@ -189,8 +200,8 @@ $orders_result = $orders_stmt->get_result();
                 </ul>
             </div>
             <div class="nav-item">
-                        <button id="darkModeToggle" class="btn btn-outline-dark">🌙</button>
-                    </div>
+                <button id="darkModeToggle" class="btn btn-outline-dark">🌙</button>
+            </div>
         </div>
     </nav>
 
