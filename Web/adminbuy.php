@@ -79,6 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
         <h1 class="text-center">Adminisztrációs Felület</h1>
 
         <!-- Keresőmező -->
+        <h2>Termék keresés</h2>
         <form method="GET" class="my-4">
         <div class="input-group">
             <input type="text" name="kereses" class="form-control" placeholder="Keresés termékek között..." value="<?= htmlspecialchars($kereses) ?>">
@@ -104,7 +105,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
                         <input type="number" class="form-control" id="ar" name="ar" required>
                     </div>
                     <div class="mb-3">
-                        <label for="kategoria" class="form-label">Kategória</label>
+                        <label for="kategoria" class="form-label">Kategória ID-ja:</label><br> 
+                        <label for="">1. Elektronikai eszközök, 2. Háztartási kellékek, 3. Könyvek, 4. Játékok, 5. Kerti eszközök, 6. Egészség.</label>
                         <input type="text" class="form-control" id="kategoria" name="kategoria" required>
                     </div>
                     <div class="mb-3">
@@ -125,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
                     <th>Név</th>
                     <th>Leírás</th>
                     <th>Ár</th>
-                    <th>Kategória</th>
+                    <th>Kategória ID-ja:</th>
                     <th>Kép</th>
                     <th>Műveletek</th>
                 </tr>
@@ -152,6 +154,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
                                     data-kep="<?= htmlspecialchars($termek['kep']) ?>">
                                 Módosítás
                             </button>
+                            
+                            <br><br>
 
                             <!-- Törlés gomb -->
                             <form method="POST" style="display: inline-block;">
@@ -189,7 +193,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
                             <input type="number" class="form-control" id="edit-ar" name="ar" required>
                         </div>
                         <div class="mb-3">
-                            <label for="edit-kategoria" class="form-label">Kategória</label>
+                            <label for="edit-kategoria" class="form-label">Kategória ID-ja:</label><br> 
+                            <label for="">1. Elektronikai eszközök, 2. Háztartási kellékek, 3. Könyvek, 4. Játékok, 5. Kerti eszközök, 6. Egészség.</label>
                             <input type="text" class="form-control" id="edit-kategoria" name="kategoria" required>
                         </div>
                         <div class="mb-3">

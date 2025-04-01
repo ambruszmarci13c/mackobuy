@@ -100,7 +100,7 @@ $orders_result = $orders_stmt->get_result();
         body {
             display: flex;
             flex-direction: column;
-            background-color: #f8f9fa;
+            background-color: #f8f1eb;
             margin: 0;
             padding-top: 70px;
         }
@@ -186,13 +186,11 @@ $orders_result = $orders_stmt->get_result();
                         </a>
                     </li>
                     <?php endif; ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout.php">
-                            <img src="kepek/logout.png" alt="Kijelentkezés" style="height: 40px;" title="Kijelentkezés">
-                        </a>
-                    </li>
                 </ul>
             </div>
+            <div class="nav-item">
+                        <button id="darkModeToggle" class="btn btn-outline-dark">🌙</button>
+                    </div>
         </div>
     </nav>
 
@@ -327,6 +325,29 @@ $orders_result = $orders_stmt->get_result();
     });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    const toggleButton = document.getElementById("darkModeToggle");
+    const body = document.body;
+
+    // Ellenőrizzük, hogy a felhasználó előzőleg bekapcsolta-e a dark mode-ot
+    if (localStorage.getItem("dark-mode") === "enabled") {
+        body.classList.add("dark-mode");
+        toggleButton.innerHTML = "☀️";
+    }
+
+    toggleButton.addEventListener("click", function() {
+        body.classList.toggle("dark-mode");
+
+        // Ha dark mode aktív, tároljuk a localStorage-ban
+        if (body.classList.contains("dark-mode")) {
+            localStorage.setItem("dark-mode", "enabled");
+            toggleButton.innerHTML = "☀️";
+        } else {
+            localStorage.setItem("dark-mode", "disabled");
+            toggleButton.innerHTML = "🌙";
+        }
+    });
+});
 </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -1,7 +1,13 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    background-color: #f8f1eb;
     margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f1eb;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;  /* Minimum magasság beállítása, hogy a footer mindig az alján legyen */
 }
 
 
@@ -44,7 +50,7 @@ h1 {
     width: 100%; 
     height: 300px; 
     object-fit: contain; 
-    background-color: #f8f8f8; 
+    background-color: #ffffff; 
     border-radius: 5px; 
 }
 
@@ -126,6 +132,7 @@ h1 {
     width: 100%;
 }
 
+
 .form-label {
     font-weight: bold;
 }
@@ -201,17 +208,15 @@ h1 {
     margin: 0 auto;
 }
 
-
-
-
-
 footer {
     text-align: center;
     padding: 10px 0;
     background-color: #6ccccc;
     color: white;
-    margin-top: 20px;
+    margin-top: auto; /* Ez gondoskodik arról, hogy a footer alulra kerüljön */
+    width: 100%;
 }
+
 
 .custom-navbar {
     background-color: lightgrey; 
@@ -261,3 +266,130 @@ footer {
 #profilDropdown::after {
     display: none !important;
 }
+
+.kedvenc-gomb{
+    background-color: #6ccccc;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.kedvenc-gomb:hover {
+    background-color: #5ab5b5;
+    transform: scale(1.1);
+}
+
+.kedvenc-gomb:active {
+    background-color: #4aa5a5;
+    transform: scale(0.95);
+}
+
+.kedvenc-gomb[data-hozzadva="true"]:hover {
+    background-color: #3f3c3c;
+}
+
+body.dark-mode {
+    background-color: #424040;
+    color: #ffffff;
+}
+
+body.dark-mode .card {
+    background-color: #6d6b6bda;
+    color: white;
+    border: 1px solid #333;
+}
+
+body.dark-mode .card p {
+    color: white;
+}
+
+body.dark-mode .modal-body {
+    background-color: #6d6b6bda;
+    color: white;
+    border: 1px solid #333;
+}
+
+body.dark-mode .modal-header {
+    background-color: #6d6b6bda;
+    border-bottom: 1px solid #444;
+}
+
+body.dark-mode .modal-footer {
+    background-color: #6d6b6bda;
+    border-top: 1px solid #444;
+}
+
+.profile-container.dark-mode {
+    background-color: #332b2b;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+.navbar-custom.dark-mode {
+    background-color: #333333;
+}
+
+.orders-table.dark-mode th {
+    background-color: #444444;
+}
+
+body.dark-mode select {
+    background-color: #333; /* Sötétszürke háttér */
+    color: white; /* Fehér szöveg */
+    border: 1px solid #555; /* Sötétszürke keret */
+}
+
+/* A lenyíló menü opcióinak háttérszíne */
+body.dark-mode select option {
+    background-color: #333;
+    color: white;
+}
+
+
+#darkModeToggle {
+    margin-left: 10px; 
+}
+
+
+
+
+#loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#loadingScreen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.spinner {
+    width: 80px;
+    height: 80px;
+    border: 8px solid #6ccccc;
+    border-top: 8px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+
+

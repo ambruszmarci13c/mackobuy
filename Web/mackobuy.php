@@ -22,10 +22,10 @@ if (isset($_POST['penznem'])) {
 if (isset($_SESSION['felhasznalo_id']) && !isset($_SESSION['penznem'])) {
     $felhasznalo_id = $_SESSION['felhasznalo_id'];
     $eredmeny = adatokLekeres("SELECT penznem FROM felhasznalok WHERE id = {$felhasznalo_id}");
-    $_SESSION['penznem'] = $eredmeny[0]['penznem'] ?? 'HUF';
-}
-
-// Alapértelmezett valuta
+    $_SESSION['penznem'] = $eredmeny[0]['penznem'] ?? 'HUF'; 
+} 
+ 
+// Alapértelmezett valuta 
 $aktualis_penznem = $_SESSION['penznem'] ?? 'HUF';
 
 // Árfolyam lekérése (EUR esetén)
@@ -87,6 +87,27 @@ if (!isset($szurt_termekek)) {
     $szurt_termekek = [];
 }
 
+$conn = new mysqli("localhost", "root", "", "mackobuy");
+if ($conn->connect_error) {
+    die("Adatbázis hiba: " . $conn->connect_error);
+}
+
+// Felhasználó ID lekérése
+$user_id = $_SESSION['user_id'] ?? 0;
+
+// Kedvencek lekérdezése az adott felhasználónak
+$query = "SELECT termek_id FROM kedvencek WHERE user_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$kedvencek = [];
+while ($row = $result->fetch_assoc()) {
+    $kedvencek[] = $row['termek_id'];
+}
+$stmt->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -111,12 +132,13 @@ if (!isset($szurt_termekek)) {
                 <a class="navbar-brand" href="mackobuy.php">
                     <img src="kepek/navlogo.png" alt="Logo" style="height: 50px;" alt="Főoldal" title="Főoldal">
                 </a>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="kosar.php"><img src="kepek/kosar.png" alt="Kosár" style="height: 38px;" alt="Kosár" title="Kosár"></a></li>
+                        <li class="nav-item"><a class="nav-link" id="kosarGomb" href="kosar.php"><img src="kepek/kosar.png" alt="Kosár" style="height: 38px;" alt="Kosár" title="Kosár"></a></li>
                         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="profilDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="kepek/profil.png" alt="Profil" style="height: 40px;" title="Profil">
@@ -142,6 +164,9 @@ if (!isset($szurt_termekek)) {
                     </li>
                     </ul>
                 </div>
+                <div class="nav-item">
+                        <button id="darkModeToggle" class="btn btn-outline-dark">🌙</button>
+                    </div>
             </div>
         </nav>
 
@@ -151,6 +176,7 @@ if (!isset($szurt_termekek)) {
         <div class="text-center">
     <img src="./kepek/logo.png" alt="mackobuy logo" class="img-fluid" style="max-width: 300px;">
 </div>        
+
         <div class="container mt-4">
             <!-- Szűrési feltételek blokk -->
             <div class="card p-3 shadow-sm">
@@ -210,79 +236,86 @@ if (!isset($szurt_termekek)) {
                 </form>
             </div>
         </div>
+        
+<!-- Szűrt termékek -->
+<div id="termekekListaja">
+    <h2 class="my-4">
+        <?= $kategoria_szures ? 'Kiválasztott kategória: ' . htmlspecialchars($kategoria_szures) : 'Termékek:' ?>
+    </h2>
+    <div class="row">
+    <?php if (is_array($szurt_termekek) && !empty($szurt_termekek)): ?>
+        <?php foreach ($szurt_termekek as $termek): ?>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card mb-4">
+                    <img src="kepek/<?= htmlspecialchars($termek['kep']) ?>" class="card-img-top" alt="<?= htmlspecialchars($termek['tnev']) ?>">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= htmlspecialchars($termek['tnev']) ?></h5>
+                        <?php
+                            $atvaltott_ar = round($termek['ar'] * $arfolyam, 2);
+                            $valuta_jel = $aktualis_penznem === 'EUR' ? '€' : 'Ft';
+                        ?>
+                        <p class="card-text"><strong>Ár:</strong> <?= $atvaltott_ar . ' ' . $valuta_jel ?></p>
 
-        <!-- Szűrt termékek -->
-        <div id="termekekListaja">
-            <h2 class="my-4"><?= $kategoria_szures ? 'Kiválasztott kategória: ' . htmlspecialchars($kategoria_szures) : 'Termékek:' ?></h2>
-            <div class="row">
-                <?php if (is_array($szurt_termekek) && !empty($szurt_termekek)): ?>
-                    <?php foreach ($szurt_termekek as $termek): ?>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <img src="kepek/<?= htmlspecialchars($termek['kep']) ?>" class="card-img-top" alt="<?= htmlspecialchars($termek['tnev']) ?>">
-                                <div class="card-body">
-                                    <h5 class="card-title"><?= htmlspecialchars($termek['tnev']) ?></h5>
-                                    <?php
-                                        $atvaltott_ar = round($termek['ar'] * $arfolyam, 2);
-                                        $valuta_jel = $aktualis_penznem === 'EUR' ? '€' : 'Ft';
-                                    ?>
-                                    <p class="card-text"><strong>Ár:</strong> <?= $atvaltott_ar . ' ' . $valuta_jel ?></p>
+                        <!-- Részletek gomb -->
+                        <button type="button" class="btn custom-btn" data-bs-toggle="modal" data-bs-target="#termekModal<?= $termek['ID'] ?>">
+                            Részletek
+                        </button>
 
-                                    <!-- Részletek gomb -->
-                                    <button type="button" class="btn custom-btn" data-bs-toggle="modal" data-bs-target="#termekModal<?= $termek['ID'] ?>">
-                                        Részletek
-                                    </button>
-                                    <button class="kedvenc-gomb" data-termek-id="<?= $termek['ID'] ?>">
-                                        🤍 Hozzáadás
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Kedvenc gomb -->
+                        <?php $hozzadva = in_array($termek['ID'], $kedvencek); ?>
+                        <button class="kedvenc-gomb"  
+                            data-termek-id="<?= $termek['ID'] ?>" 
+                            data-hozzadva="<?= $hozzadva ? 'true' : 'false' ?>">
+                            <?= $hozzadva ? '❤️' : '🤍' ?>
+                        </button>
 
-                        <!-- Modal -->
-<div class="modal fade" id="termekModal<?= $termek['ID'] ?>" tabindex="-1" aria-labelledby="termekModalLabel<?= $termek['ID'] ?>" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="termekModalLabel<?= $termek['ID'] ?>"><?= htmlspecialchars($termek['tnev']) ?></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Bezárás"></button>
-            </div>
-            <div class="modal-body">
-                <div class="text-center">
-                    <img src="kepek/<?= htmlspecialchars($termek['kep']) ?>" class="img-fluid mb-3" alt="<?= htmlspecialchars($termek['tnev']) ?>">
-                    <p><?= nl2br(htmlspecialchars($termek['leiras'])) ?></p>
-                    
-                    <?php if ($termek['garancia']): ?>
-                        <p>Garancia: <?= htmlspecialchars($termek['garancia']) ?> hónap</p>
-                    <?php endif; ?>
-                    
-                    <?php
-                        $atvaltott_ar = round($termek['ar'] * $arfolyam, 2);
-                        $valuta_jel = $aktualis_penznem === 'EUR' ? '€' : 'Ft';
-                    ?>
-                    <p><strong>Ár:</strong> <?= $atvaltott_ar . ' ' . $valuta_jel ?></p>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <form method="POST" action="kosar.php">
-                    <input type="hidden" name="termek_id" value="<?= $termek['ID'] ?>">
-                    <button type="submit" class="btn custom-btn">Kosárba</button>
-                </form>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
+
+            <!-- Modal (a foreach cikluson belül!) -->
+            <div class="modal fade" id="termekModal<?= $termek['ID'] ?>" tabindex="-1" aria-labelledby="termekModalLabel<?= $termek['ID'] ?>" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="termekModalLabel<?= $termek['ID'] ?>"><?= htmlspecialchars($termek['tnev']) ?></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Bezárás"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <img src="kepek/<?= htmlspecialchars($termek['kep']) ?>" class="img-fluid mb-3" alt="<?= htmlspecialchars($termek['tnev']) ?>">
+                                <p><?= nl2br(htmlspecialchars($termek['leiras'])) ?></p>
+
+                                <?php if ($termek['garancia']): ?>
+                                    <p>Garancia: <?= htmlspecialchars($termek['garancia']) ?> hónap</p>
+                                <?php endif; ?>
+
+                                <p><strong>Ár:</strong> <?= $atvaltott_ar . ' ' . $valuta_jel ?></p>
+                            </div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <form method="POST" action="kosar.php">
+                                <input type="hidden" name="termek_id" value="<?= $termek['ID'] ?>">
+                                <button type="submit" class="btn custom-btn">Kosárba</button>
+                            </form>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <div class="custom-alert text-center" role="alert">
+            Ebben az ártartományban egy termék sem található!
         </div>
+    <?php endif; ?>
+</div>
+
+    </div>
     </div>
 </div>
 
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="custom-alert text-center" role="alert">
-                        Ebben az ártartományban egy termék sem található!
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -300,9 +333,11 @@ var maxArKijelzo = document.getElementById('maxArKijelzo');
 var penznemSelect = document.querySelector("select[name='penznem']");
 var arfolyam = <?= $arfolyam ?>; // PHP-ból az aktuális árfolyam
 
+console.log(maxArInput.value);
+
 // Kezdeti csúszka beállítása az árfolyamnak megfelelően
 noUiSlider.create(slider, {
-    start: [<?= $min_ar ?>, <?= $max_ar ?>],
+    start: [<?= $alap_min_ar ?>, <?= $alap_max_ar ?>],
     connect: true,
     step: 1000,
     range: {
@@ -366,6 +401,8 @@ penznemSelect.addEventListener('change', function() {
     updateSliderValues([minValue, maxValue]);
 });
 
+
+
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll(".kedvenc-gomb").forEach(function(button) {
         button.addEventListener("click", function() {
@@ -382,10 +419,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (data.status === "success") {
                     if (action === "add") {
                         button.classList.add("kedvenc");  // CSS osztály a kijelöléshez
-                        button.innerHTML = "❤️ Kedvenc";  // Szív ikon beállítása
+                        button.innerHTML = "❤️";  // Szív ikon beállítása
                     } else {
                         button.classList.remove("kedvenc");
-                        button.innerHTML = "🤍 Hozzáadás";  // Visszaállítás
+                        button.innerHTML = "🤍";  // Visszaállítás
                     }
                 } else {
                     alert("Hiba: " + data.message);
@@ -396,14 +433,64 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleButton = document.getElementById("darkModeToggle");
+    const body = document.body;
+
+    // Ellenőrizzük, hogy a felhasználó előzőleg bekapcsolta-e a dark mode-ot
+    if (localStorage.getItem("dark-mode") === "enabled") {
+        body.classList.add("dark-mode");
+        toggleButton.textContent = "☀️";
+    }
+
+    toggleButton.addEventListener("click", function () {
+        body.classList.toggle("dark-mode");
+
+        // Ha dark mode aktív, tároljuk a localStorage-ban
+        if (body.classList.contains("dark-mode")) {
+            localStorage.setItem("dark-mode", "enabled");
+            toggleButton.textContent = "☀️";
+        } else {
+            localStorage.setItem("dark-mode", "disabled");
+            toggleButton.textContent = "🌙";
+        }
+    });
+});
+
+
+console.log(maxArInput.value);
+console.log(maxArKijelzo.value);
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const kosarGomb = document.getElementById("kosarGomb");
+    const loadingScreen = document.getElementById("loadingScreen");
+
+    if (kosarGomb && loadingScreen) {
+        kosarGomb.addEventListener("click", function(event) {
+            event.preventDefault(); // Megakadályozza az azonnali navigációt
+
+            loadingScreen.classList.add("active"); // Betöltő képernyő megjelenítése
+
+            setTimeout(() => {
+                window.location.href = this.getAttribute("href"); // Átirányítás a kosár oldalra
+            }, 1000); // 1,5 másodperces késleltetés
+        });
+    }
+});
 </script>
 
+<div id="loadingScreen">
+    <div class="spinner"></div>
+</div>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 MackoBuy. Minden jog fenntartva.</p>
+    </div>
+</footer>
 
 
-      <footer>
-        <div class="container">
-            <p>&copy; 2025 MackoBuy. Minden jog fenntartva.</p>
-        </div>
-    </footer>
+
 </body>
 </html>
