@@ -15,10 +15,10 @@
         <?php if (isset($error)) { echo "<p class='error'>$error</p>"; } ?>
         <form method="POST" action="mackobuy_bejelentkezes.php" id="bejelentkezes-form">
             <label for="felhasznalonev">Felhasználónév:</label>
-            <input type="text" id="felhasznalonev" name="felhasznalonev" required><br>
+            <input type="text" id="felhasznalonev" name="felhasznalonev" placeholder="Felhasznalonev1" required><br>
             
             <label for="jelszo">Jelszó:</label>
-            <input type="password" id="jelszo" name="jelszo" required><br>
+            <input type="password" id="jelszo" name="jelszo" placeholder="Jelszo123" required><br>
             
             <button type="submit" name="bejelentkezes">Bejelentkezés</button>
         </form>

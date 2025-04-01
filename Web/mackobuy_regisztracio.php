@@ -15,16 +15,16 @@
         <?php if (isset($error)) { echo "<p class='error'>$error</p>"; } ?>
         <form method="POST" action="mackobuy_regisztracio.php" id="regisztracio-form">
             <label for="felhasznalonev">Felhasználónév:</label>
-            <input type="text" id="felhasznalonev" name="felhasznalonev" required>
+            <input type="text" id="felhasznalonev" name="felhasznalonev" placeholder="Felhasznalonev1" required>
     
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" placeholder="pelda123@gmail.com" required>
     
             <label for="jelszo">Jelszó:</label>
-            <input type="password" id="jelszo" name="jelszo" required>
+            <input type="password" id="jelszo" name="jelszo" placeholder="Jelszo123" required>
 
             <label for="jelszo2">Jelszó megismétlése:</label>
-            <input type="password" id="jelszo2" name="jelszo2" required>
+            <input type="password" id="jelszo2" name="jelszo2" placeholder="Jelszo123" required>
     
             <button type="submit" name="regisztracio">Regisztráció</button>
 
