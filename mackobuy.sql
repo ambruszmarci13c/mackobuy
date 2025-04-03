@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Ápr 02. 17:58
+-- Létrehozás ideje: 2025. Ápr 03. 13:03
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -111,12 +111,12 @@ CREATE TABLE `rendelesek` (
 --
 
 INSERT INTO `rendelesek` (`ID`, `FID`, `TID`, `vegosszeg`, `rendeles_datum`, `statusz`, `szallitasi_dij`) VALUES
-(0, 3, NULL, 152019, '2025-04-02', NULL, 1790),
-(1, 1, 5, 1000, '2024-01-15', 'feldolgozás alatt', 1500),
+(1, 3, NULL, 152019, '2025-04-02', NULL, 1790),
 (2, 3, 3, 9100, '2024-01-20', 'kiszállítva', 1000),
 (3, 3, 1, 8000, '2024-02-01', 'feldolgozás alatt', 1200),
 (4, 3, 10, 8000, '2024-02-10', 'szállítás alatt', 1300),
-(5, 5, 8, 8000, '2024-02-15', 'kézbesítve', 1400);
+(5, 5, 8, 8000, '2024-02-15', 'kézbesítve', 1400),
+(6, 2, NULL, 100399, '2025-04-03', NULL, 1190);
 
 -- --------------------------------------------------------
 
@@ -258,6 +258,12 @@ ALTER TABLE `kategoria`
 --
 ALTER TABLE `kedvencek`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT a táblához `rendelesek`
+--
+ALTER TABLE `rendelesek`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Megkötések a kiírt táblákhoz
