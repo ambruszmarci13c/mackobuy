@@ -1,0 +1,12 @@
+Array
+(
+    [termek_id] => 8
+    [action] => add
+)
+
+SESSION: Array
+(
+    [user_id] => 2
+    [username] => admin01
+    [penznem] => HUF
+)

@@ -1,0 +1,338 @@
+/* 💖 Alap stílusok */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+html, body {
+    height: 100%;
+    background-color: #f8f1eb;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+/* 📦 Konténer */
+#termekek {
+    max-width: 1200px;
+    margin: 90px auto; /* Eredeti 50px helyett 80px */
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 🛒 Termékek rácsban */
+.termek-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.kedvterm {
+    color: #6ccccc;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* 🎴 Termékkártya */
+.termek-kartya {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    width: 280px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    
+}
+
+.termek-kartya:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 🖼️ Képek */
+.termek-kartya img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* 🏷️ Terméknév */
+.termek-kartya h3 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #333;
+}
+
+/* 💰 Ár */
+.ar {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff3e6c;
+    margin-bottom: 10px;
+}
+
+/* ❌ Eltávolítás gomb */
+.eltavolitas-gomb {
+    background-color: #ff3e6c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.eltavolitas-gomb:hover {
+    background-color: #d8345f;
+}
+
+/* 📱 Reszponzivitás */
+@media (max-width: 768px) {
+    .termek-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.navbar-brand img {
+    height: 60px;
+    width: auto;
+    max-height: 80px;
+    transition: transform 0.3s;
+}
+
+.custom-navbar {
+    background-color: lightgrey; 
+    opacity: 80%;
+}
+
+.penznem-select {
+    background-color: #6ccccc; 
+    color: white; 
+    border: 2px solid #5bbbbb; 
+    border-radius: 8px; 
+    padding: 6px 12px; 
+    font-weight: bold;
+    margin-top: 8px; 
+    margin-left: 10px;
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); 
+    background-repeat: no-repeat;
+    background-position: right 10px center; 
+    background-size: 12px; 
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s; /* Animáció */
+}
+
+.penznem-select:hover {
+    background-color: #5bbbbb; 
+    border-color: #4aa9a9; 
+}
+
+.penznem-select:focus {
+    outline: none; 
+    box-shadow: 0 0 8px rgba(108, 204, 204, 0.8); 
+}
+
+#profilDropdown::after {
+    display: none !important;
+}
+
+html, body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#foot {
+    flex: 1; /* A tartalom kitölti a maradék helyet */
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #6ccccc;
+    color: white;
+    width: 100%;
+}
+
+/* 🌙 Dark Mode alapbeállítások */
+.dark-mode {
+    background-color: #424040;
+    color: white;
+}
+
+#darkModeToggle {
+    margin-left: 10px; 
+}
+
+.dark-mode #termekek {
+    background-color: #3a3838;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Kártyák sötét mód */
+.dark-mode .termek-kartya {
+    background-color: #6d6b6bda;
+    color: white;
+    border: 1px solid #333;
+}
+
+.dark-mode .termek-kartya h3,
+.dark-mode .termek-kartya p {
+    color: white;
+}
+
+/* Gombok sötét mód */
+.dark-mode .eltavolitas-gomb {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+}
+
+.dark-mode .eltavolitas-gomb:hover {
+    background-color: #cc0000;
+}
+
+/* Táblázatok sötét mód (ha lenne a kedvencek között) */
+.dark-mode table {
+    background-color: #1e1e1e;
+    color: white;
+    border-color: #444;
+}
+
+.dark-mode th, .dark-mode td {
+    border-color: #444;
+}
+
+body.dark-mode select {
+    background-color: #333; /* Sötétszürke háttér */
+    color: white; /* Fehér szöveg */
+    border: 1px solid #555; /* Sötétszürke keret */
+}
+
+/* A lenyíló menü opcióinak háttérszíne */
+body.dark-mode select option {
+    background-color: #333;
+    color: white;
+}
+.reszletek-gomb {
+    background-color: #6ccccc;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-left: 5px; /* Hely a gombok között */
+}
+
+.reszletek-gomb:hover {
+    background-color: #4ea7a7;
+}
+
+/* 팝업 Modal */
+.modal-body img {
+    width: 100%; 
+    height: auto; 
+    max-width: 100%; 
+    max-height: 400px; 
+    object-fit: contain; 
+    object-position: center; 
+    display: block; 
+    margin: 0 auto;
+}
+
+/* 🌙 Dark Mode alapbeállítások */
+.dark-mode {
+    background-color: #424040;
+    color: white;
+}
+
+/* Dark Mode a termékek konténerére */
+.dark-mode #termekek {
+    background-color: #3a3838;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Dark Mode a termékkártyákra */
+.dark-mode .termek-kartya {
+    background-color: #6d6b6bda;
+    color: white;
+    border: 1px solid #333;
+}
+
+.dark-mode .termek-kartya h3,
+.dark-mode .termek-kartya p {
+    color: white;
+}
+
+/* Dark Mode a gombokra */
+.dark-mode .eltavolitas-gomb {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+}
+
+.dark-mode .eltavolitas-gomb:hover {
+    background-color: #cc0000;
+}
+
+/* Dark Mode a Részletek gombra */
+.dark-mode .reszletek-gomb {
+    background-color: #5ab5b5; /* Világosabb szín a jobb láthatóságért */
+    color: white;
+    border: none;
+}
+
+.dark-mode .reszletek-gomb:hover {
+    background-color: #4aa5a5;
+}
+
+body.dark-mode .modal-body {
+    background-color: #6d6b6bda;
+    color: white;
+    border: 1px solid #333;
+}
+
+body.dark-mode .modal-header {
+    background-color: #6d6b6bda;
+    border-bottom: 1px solid #444;
+}
+
+body.dark-mode .modal-footer {
+    background-color: #6d6b6bda;
+    border-top: 1px solid #444;
+}
+
+.custom-btn {
+    background-color: #6ccccc;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
